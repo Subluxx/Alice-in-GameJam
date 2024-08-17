@@ -4,19 +4,32 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : MonoBehaviour
-{
-        public float walkSpeed = 10f;       // Increased speed for faster movement
-    public float sprintSpeed = 15f;     // Increased sprint speed
-    public float acceleration = 10f;    // Faster acceleration
-    public float deceleration = 10f;    // Faster deceleration
-    public float smoothTime = 0.05f;    // Smoother movement
-    public float sizeChangeFactor = 1.1f;
-    public float sizeChangeDuration = 0.5f;
-    public float jumpForce = 10f;       // Adjusted jump force
-    public float fastFallForce = 20f;   // Faster fall force
-    public float gravity = 9.81f;        // Ensure gravity is positive for downward force
-    public float groundCheckDistance = 0.2f;  // Distance for the ground check
-    public string groundTag = "Ground";
+{ 
+       // Movement and control variables
+    public float walkSpeed = 10f;
+    public float sprintSpeed = 15f;
+    public float airControlMultiplier = 0.5f;
+    public float acceleration = 15f;
+    public float deceleration = 15f;
+    public float smoothTime = 0.1f;
+    public float friction = 5f;
+    public float gravity = 12f;
+    public float apexGravityMultiplier = 0.6f;
+    public float fastFallForce = 10f;
+    public float groundCorrectionForce = 5f;
+
+    // Jump variables
+    public float jumpForce = 9f;
+    public float jumpBufferTime = 0.1f;
+    public float coyoteTime = 0.1f;
+    public float glideFactor = 0.6f;
+    public float glideSpeed = 0.1f;
+
+    // Size change variables
+    public float sizeChangeFactor = 1.1f;  // Factor to change size
+    public float sizeChangeDuration = 0.5f;  // Duration of size change effect
+    public Vector3 maxSize = new Vector3(2.2f, 2.2f, 2.2f);  // Maximum allowed size
+    public Vector3 minSize = new Vector3(0.8f, 0.8f, 0.8f);  // Minimum allowed size
 
     private float currentSpeed = 0f;
     private Vector3 currentVelocity = Vector3.zero;
@@ -27,28 +40,38 @@ public class CharacterMovement : MonoBehaviour
     private float scaleProgress = 0f;
     private bool isGrounded;
     private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
+    private bool isApexReached = false;
+    private bool isJumping = false;
+    private float jumpTimeCounter;
+    private float jumpBufferCounter = 0f;
+    private float coyoteTimeCounter = 0f;
+    private bool jumpInput = false;
+    private bool fastFallInput = false;
+    private bool holdJumpInput = false;
+    private Collider groundCollider;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;  // Prevent the Rigidbody from rotating
+        rb.freezeRotation = true;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
         targetScale = transform.localScale;
+        capsuleCollider = GetComponent<CapsuleCollider>();
+
+        // Ensure a Box Collider is attached for ground detection
+        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+        boxCollider.isTrigger = true; // Set as trigger for collision detection
     }
 
     void Update()
     {
-        Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red);
-        // Check if the player is grounded using a Raycast
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, LayerMask.GetMask(groundTag));
+        // Handle player inputs in Update
+        jumpInput = Input.GetKeyDown(KeyCode.W);
+        holdJumpInput = Input.GetKey(KeyCode.W);
+        fastFallInput = Input.GetKey(KeyCode.S);
 
-        if (isGrounded && rb.velocity.y < 0)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, -2f, rb.velocity.z); // Reset the downward velocity when grounded
-        }
-
-        // Handle movement based on input
         float moveX = 0f;
-
         if (Input.GetKey(KeyCode.A))
         {
             moveX = -1f;  // Move left
@@ -60,36 +83,115 @@ public class CharacterMovement : MonoBehaviour
 
         targetDirection = new Vector3(moveX, 0f, 0f).normalized;
 
-        float targetSpeed = walkSpeed; // Adjust for walk speed; add sprint logic if needed
-
-        if (targetDirection.magnitude > 0)
+        if (jumpInput)
         {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.deltaTime);
+            jumpBufferCounter = jumpBufferTime;  // Reset jump buffer when jump is pressed
+        }
+    }
+
+    void FixedUpdate()
+    {
+        // Handle coyote time
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;  // Reset coyote time when grounded
         }
         else
         {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);
+            coyoteTimeCounter -= Time.fixedDeltaTime;  // Decrease coyote time while airborne
         }
 
-        Vector3 targetMovement = targetDirection * currentSpeed;
-        movement = Vector3.SmoothDamp(movement, targetMovement, ref currentVelocity, smoothTime);
+        // Handle jump buffering
+        jumpBufferCounter -= Time.fixedDeltaTime;  // Decrease jump buffer over time
 
-        // Apply movement along the X axis using Rigidbody
-        rb.velocity = new Vector3(movement.x, rb.velocity.y, 0f);
+        // Apply air control multiplier if in the air
+        float currentAcceleration = isGrounded ? acceleration : acceleration * airControlMultiplier;
+        float currentDeceleration = isGrounded ? deceleration : deceleration * airControlMultiplier;
 
-        // Jumping and fast falling
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        // Determine target speed
+        float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
+
+        if (targetDirection.magnitude > 0)
+        {
+            currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref currentVelocity.x, smoothTime);
+        }
+        else
+        {
+            currentSpeed = Mathf.SmoothDamp(currentSpeed, 0f, ref currentVelocity.x, smoothTime);
+        }
+
+        // Smoothly apply movement using Rigidbody
+        movement = targetDirection * currentSpeed;
+
+        if (isGrounded)
+        {
+            rb.velocity = new Vector3(movement.x, rb.velocity.y, 0f);
+        }
+        else
+        {
+            // Apply glide effect when changing direction in the air
+            Vector3 desiredVelocity = new Vector3(movement.x, rb.velocity.y, 0f);
+            rb.velocity = Vector3.Lerp(rb.velocity, desiredVelocity, glideSpeed);
+        }
+
+        // Variable Jump Height with Jump Buffer and Coyote Time
+        if (jumpBufferCounter > 0 && (coyoteTimeCounter > 0 || isGrounded))
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z); // Apply jump force
+            isJumping = true;
+            isApexReached = false;
+
+            // Reset jump buffer to prevent double jumps
+            jumpBufferCounter = 0f;
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (holdJumpInput && isJumping)
+        {
+            if (rb.velocity.y > 0)  // While ascending
+            {
+                rb.velocity += Vector3.up * (jumpForce / 2) * Time.fixedDeltaTime; // Increase jump force while holding
+            }
+        }
+
+        if (!holdJumpInput && rb.velocity.y > 0)
+        {
+            isJumping = false;
+        }
+
+        // Fast falling
+        if (fastFallInput && !isGrounded)
         {
             rb.AddForce(Vector3.down * fastFallForce, ForceMode.VelocityChange);
         }
 
-        // Apply gravity manually if not using Rigidbody's gravity
-        rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        // Apply custom gravity logic
+        if (!isGrounded)
+        {
+            if (rb.velocity.y > 0 && !isApexReached)
+            {
+                rb.AddForce(Vector3.down * gravity * apexGravityMultiplier, ForceMode.Acceleration);
+            }
+            else
+            {
+                rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+                if (rb.velocity.y <= 0)
+                {
+                    isApexReached = true;
+                }
+            }
+        }
+
+        // Correct position to avoid clipping
+        if (isGrounded && rb.velocity.y < 0)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, Mathf.Max(rb.velocity.y, -groundCorrectionForce), rb.velocity.z);
+        }
+
+        // Handle friction on landing/takeoff
+        if (isGrounded && Mathf.Abs(rb.velocity.x) > 0.1f)
+        {
+            rb.velocity = new Vector3(rb.velocity.x * (1 - friction * Time.deltaTime), rb.velocity.y, rb.velocity.z);
+        }
 
         // Handle smooth scaling if scaling is in progress
         if (isScaling)
@@ -104,19 +206,37 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    // Method to change the character's size
+    public void ChangeSize(float factor)
     {
-        if (other.gameObject.CompareTag("Item"))
+        // Calculate the new size
+        Vector3 newSize = transform.localScale * factor;
+
+        // Ensure the new size is within limits
+        newSize.x = Mathf.Clamp(newSize.x, minSize.x, maxSize.x);
+        newSize.y = Mathf.Clamp(newSize.y, minSize.y, maxSize.y);
+        newSize.z = Mathf.Clamp(newSize.z, minSize.z, maxSize.z);
+
+        targetScale = newSize;
+        scaleProgress = 0f;
+        isScaling = true;
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        // Check if the collision is with ground
+        if (collision.collider.CompareTag("Ground"))
         {
-            ChangeSize(sizeChangeFactor);
-            Destroy(other.gameObject);
+            isGrounded = true;
         }
     }
 
-    void ChangeSize(float factor)
+    void OnCollisionExit(Collision collision)
     {
-        targetScale = transform.localScale * factor;
-        scaleProgress = 0f;
-        isScaling = true;
+        // Check if the collision is with ground
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 }
