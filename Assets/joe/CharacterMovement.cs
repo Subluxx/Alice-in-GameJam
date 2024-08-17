@@ -66,6 +66,11 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
+        // Quick restart to last checkpoint when 'R' is pressed
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            CheckpointManager.Instance.RestartFromCheckpoint();
+        }
         // Handle player inputs in Update
         jumpInput = Input.GetKeyDown(KeyCode.W);
         holdJumpInput = Input.GetKey(KeyCode.W);
