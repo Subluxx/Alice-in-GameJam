@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/OllieScenes/MainMenu.unity
+    guid: 4dab2921264a74947998a7ff82b8983c
+  - enabled: 1
+    path: Assets/OllieScenes/Intro.unity
+    guid: 758204d8131ab814c8d61330932c66d0
+  - enabled: 1
+    path: Assets/OllieScenes/Inventory.unity
+    guid: cdaa08862b83d62459ab03b7476b4812
   m_configObjects: {}
