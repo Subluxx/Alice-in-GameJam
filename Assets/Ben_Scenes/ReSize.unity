@@ -690,7 +690,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
@@ -747,6 +747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherRooms: []
+  scaleFactor: 1.5
 --- !u!114 &264004090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1781,7 +1782,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
@@ -1838,6 +1839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherRooms: []
+  scaleFactor: 1.5
 --- !u!114 &680520441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2218,6 +2220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherRooms: []
+  scaleFactor: 1.5
 --- !u!65 &907180947
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2262,7 +2265,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -2321,7 +2324,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
@@ -2378,6 +2381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherRooms: []
+  scaleFactor: 1.5
 --- !u!114 &931946356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2748,7 +2752,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
@@ -2805,6 +2809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherRooms: []
+  scaleFactor: 1.5
 --- !u!114 &1124054210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3935,7 +3940,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
@@ -3973,6 +3978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherRooms: []
+  scaleFactor: 1.5
 --- !u!114 &1969969499
 MonoBehaviour:
   m_ObjectHideFlags: 0
