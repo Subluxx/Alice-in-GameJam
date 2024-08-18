@@ -25,7 +25,8 @@ public class ItemPickup : Interactable
         if (wasPickedUp)
         {
             Debug.Log("yupie");
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            /*Destroy(gameObject);*/
         }
 
     }

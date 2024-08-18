@@ -3,8 +3,8 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
 
-    public GameObject inventoryUI;  // The entire UI
-    public Transform itemsParent;   // The parent object of all the items
+    public GameObject inventoryUI;  
+    public Transform itemsParent;   
 
     Inventory inventory;    // Our current inventory
 
@@ -14,20 +14,19 @@ public class InventoryUI : MonoBehaviour
         inventory.onItemChangedCallback += UpdateUI;
     }
 
-    // Check to see if we should open/close the inventory
+    
     void Update()
     {
-        if (Input.GetButtonDown("Inventory"))
+        /*if (Input.GetButtonDown("Inventory"))
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
             UpdateUI();
-        }
+        }*/
+        
+        UpdateUI();
     }
 
-    // Update the inventory UI by:
-    //		- Adding items
-    //		- Clearing empty slots
-    // This is called using a delegate on the Inventory.
+   
     public void UpdateUI()
     {
         InventorySlot[] slots = GetComponentsInChildren<InventorySlot>();

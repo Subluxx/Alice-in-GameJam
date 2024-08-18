@@ -10,10 +10,12 @@ public class InventorySlot : MonoBehaviour {
 	public Image icon;
 	public Button removeButton;
 
-	Item item;	// Current item in the slot
+	Item item;
+	public GameObject itemPickup;
 
-	// Add item to the slot
-	public void AddItem (Item newItem)
+
+
+    public void AddItem (Item newItem)
 	{
 		item = newItem;
 
@@ -22,7 +24,6 @@ public class InventorySlot : MonoBehaviour {
 		removeButton.interactable = true;
 	}
 
-	// Clear the slot
 	public void ClearSlot ()
 	{
 		item = null;
@@ -32,14 +33,24 @@ public class InventorySlot : MonoBehaviour {
 		removeButton.interactable = false;
 	}
 
-	// If the remove button is pressed, this function will be called.
 	public void RemoveItemFromInventory ()
 	{
+		SpawnItem();
+		
+
+	   Debug.Log("!!!");
 		Inventory.instance.Remove(item);
 	}
 
-	// Use the item
-	public void UseItem ()
+
+    public void SpawnItem()
+    {
+        itemPickup.SetActive(true);
+        //spawn a 3d item back to the scene
+    }
+
+    // Use the item
+    public void UseItem ()
 	{
 		if (item != null)
 		{

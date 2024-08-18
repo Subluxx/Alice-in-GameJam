@@ -149,14 +149,14 @@ RectTransform:
   m_GameObject: {fileID: 403740402}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.0783, y: 2.0783, z: 2.0783}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1863069994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -116.93, y: -177.735}
+  m_AnchoredPosition: {x: 369, y: -9}
   m_SizeDelta: {x: 200.47, y: 448.1458}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &403740404
@@ -265,8 +265,8 @@ Canvas:
   m_GameObject: {fileID: 506748881}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1729241773}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -594,14 +594,14 @@ RectTransform:
   m_GameObject: {fileID: 714498493}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8303, y: 0.8303, z: 0.8303}
+  m_LocalScale: {x: 1.2970946, y: 1.2970946, z: 1.2970946}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1863069994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15.274, y: 134}
+  m_AnchoredPosition: {x: -145, y: 327}
   m_SizeDelta: {x: 202.41, y: 20.937}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &714498495
@@ -738,7 +738,7 @@ RectTransform:
   m_GameObject: {fileID: 1012866497}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.1384, y: 2.1384, z: 2.1384}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 551860266}
@@ -746,7 +746,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86.5474, y: -9.179}
+  m_AnchoredPosition: {x: -210, y: 42}
   m_SizeDelta: {x: 206.4762, y: 48.358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1012866499
@@ -870,7 +870,7 @@ RectTransform:
   m_GameObject: {fileID: 1350273260}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5026, y: 2.5026, z: 2.5026}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1863069994}
@@ -946,7 +946,7 @@ RectTransform:
   m_GameObject: {fileID: 1490890994}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.1384, y: 2.1384, z: 2.1384}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 703691300}
@@ -954,7 +954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86.5474, y: -80}
+  m_AnchoredPosition: {x: -210.00003, y: -133}
   m_SizeDelta: {x: 206.4762, y: 48.358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1490890996
@@ -1237,7 +1237,7 @@ GameObject:
   - component: {fileID: 1860423742}
   - component: {fileID: 1860423741}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Game Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1252,14 +1252,14 @@ RectTransform:
   m_GameObject: {fileID: 1860423739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5026, y: 2.5026, z: 2.5026}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1863069994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -52, y: 121}
+  m_AnchoredPosition: {x: -166, y: 300}
   m_SizeDelta: {x: 275.8578, y: 55.3421}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1860423741
@@ -1282,7 +1282,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: THE DOLLHOUSE GAME
+  m_text: "THE \nGAME TITLE"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 112c8439da87b514bb1177b4507f6c7c, type: 2}
   m_sharedMaterial: {fileID: 5133479002806119588, guid: 112c8439da87b514bb1177b4507f6c7c, type: 2}
