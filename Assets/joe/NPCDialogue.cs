@@ -1,74 +1,74 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class NPCDialogue : MonoBehaviour, IPointerClickHandler
 {
-    public string[] dialogueLines; // Array to hold the dialogue lines for the NPC
-    public float interactionRange = 3f; // Range within which the player can interact with the NPC
-    public float dialogueDisplayDuration = 5f; // How long each line of dialogue is displayed
+    public string[] dialogueLines; // The lines of dialogue
+    public float interactionRange = 5f; // Range within which the player can interact with the NPC
+    public float typingSpeed = 0.05f; // Speed of the typing effect
 
-    public Camera mainCamera; // Reference to the main camera
-    public float cameraZoomDuration = 1f; // Duration of the camera zoom in/out
-    public float cameraZoomFieldOfView = 30f; // The FOV when zoomed in
-    public float focusPointDistance = 2f; // Distance in front of the NPC for the camera to focus on
+    public GameObject dialogueUI; // Reference to the dialogue UI GameObject
+    public Image textboxImage; // Reference to the Image component for the textbox
+    public Text dialogueText; // Reference to the Text component for the dialogue
+    public Transform npcTransform; // Reference to the NPC's transform
 
-    private bool isPlayerInRange = false;
-    private bool isDialogueActive = false;
     private int currentLineIndex = 0;
-    private GameObject player;
-    private Coroutine dialogueCoroutine;
+    private bool isTyping = false;
+    private bool isDialogueActive = false;
 
+    private Camera mainCamera;
     private Vector3 originalCameraPosition;
-    private Quaternion originalCameraRotation;
-    private float originalCameraFieldOfView;
+    private float originalCameraSize;
+    private bool isCameraZoomed = false;
 
-    private Vector3 cameraFocusPoint; // Virtual focus point in front of the NPC
-
-    private CharacterMovement playerMovement; // Reference to the player's movement script
+    private GameObject player;
+    private CharacterMovement playerMovement;
+    private bool isPlayerInRange = false;
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player"); // Assuming the player has the tag "Player"
-
-        if (mainCamera == null)
-        {
-            mainCamera = Camera.main; // Find the main camera if not assigned
-        }
-
-        // Get reference to the player's movement script
-        playerMovement = player.GetComponent<CharacterMovement>();
-
+        mainCamera = Camera.main;
         originalCameraPosition = mainCamera.transform.position;
-        originalCameraRotation = mainCamera.transform.rotation;
-        originalCameraFieldOfView = mainCamera.fieldOfView;
+        originalCameraSize = mainCamera.orthographicSize;
 
-        // Calculate the focus point in front of the NPC
-        cameraFocusPoint = transform.position + transform.forward * focusPointDistance;
-        cameraFocusPoint.y += transform.position.y / 2;
+        dialogueUI.SetActive(false); // Hide the UI at the start
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            playerMovement = player.GetComponent<CharacterMovement>();
+        }
     }
 
     private void Update()
     {
-        // Check the distance between the NPC and the player
         if (player != null)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             isPlayerInRange = distanceToPlayer <= interactionRange;
         }
+
+        if (isDialogueActive)
+        {
+            // Position the UI above the NPC
+            Vector3 screenPosition = mainCamera.WorldToScreenPoint(npcTransform.position);
+            dialogueUI.transform.position = screenPosition + new Vector3(0, 100, 0); // Adjust this offset as needed
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                DisplayNextLine();
+            }
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Only start dialogue if the player is within range and dialogue is not already active
         if (isPlayerInRange && !isDialogueActive)
         {
             StartDialogue();
-        }
-        else if (isDialogueActive)
-        {
-            // Finish the dialogue if it is currently active
-            EndDialogue();
         }
     }
 
@@ -76,7 +76,6 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
     {
         isDialogueActive = true;
         currentLineIndex = 0;
-        dialogueCoroutine = StartCoroutine(DisplayDialogue());
 
         // Lock player controls
         if (playerMovement != null)
@@ -88,34 +87,40 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
         StartCoroutine(CameraZoomIn());
     }
 
-    private IEnumerator DisplayDialogue()
+    private IEnumerator TypeLine(string line)
     {
-        while (currentLineIndex < dialogueLines.Length)
+        isTyping = true;
+        dialogueText.text = "";
+        foreach (char letter in line.ToCharArray())
         {
-            // Call your method here to display the dialogue line
-            DisplayDialogueLine(dialogueLines[currentLineIndex]);
-
-            // Wait for the player to click to advance the dialogue
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-
-            currentLineIndex++;
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
         }
-
-        EndDialogue();
+        isTyping = false;
     }
 
-    private void EndDialogue()
+    private void DisplayNextLine()
     {
-        isDialogueActive = false;
+        if (isTyping) return; // Prevent skipping while typing
 
-        // Stop the dialogue coroutine if it is still running
-        if (dialogueCoroutine != null)
+        if (currentLineIndex < dialogueLines.Length - 1)
         {
-            StopCoroutine(dialogueCoroutine);
+            currentLineIndex++;
+            StartCoroutine(TypeLine(dialogueLines[currentLineIndex]));
         }
+        else
+        {
+            StartCoroutine(EndDialogue());
+        }
+    }
 
-        // Call your method here to hide the dialogue or cleanup
-        HideDialogue();
+    private IEnumerator EndDialogue()
+    {
+        // Hide the UI before zooming out
+        dialogueUI.SetActive(false);
+
+        // Start the camera zoom-out effect
+        yield return StartCoroutine(CameraZoomOut());
 
         // Unlock player controls
         if (playerMovement != null)
@@ -123,73 +128,58 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
             playerMovement.enabled = true;
         }
 
-        // Start the camera zoom-out effect
-        StartCoroutine(CameraZoomOut());
-    }
-
-    private void DisplayDialogueLine(string line)
-    {
-        // Implement your code here to display the dialogue line on the UI
-        Debug.Log(line); // Placeholder for your actual dialogue display code
-    }
-
-    private void HideDialogue()
-    {
-        // Implement your code here to hide the dialogue
-        Debug.Log("Dialogue ended."); // Placeholder for your actual dialogue hide code
+        isDialogueActive = false;
     }
 
     private IEnumerator CameraZoomIn()
     {
+        Vector3 targetPosition = npcTransform.position;
+        targetPosition.z -= 10; // Adjust this value to position the camera in front of the NPC
+
+        float duration = 0.5f; // Duration of the zoom-in effect
         float elapsedTime = 0f;
 
-        Vector3 targetPosition = cameraFocusPoint;
-        Quaternion targetRotation = Quaternion.LookRotation(transform.position - mainCamera.transform.position);
+        Vector3 startingPosition = mainCamera.transform.position;
+        float startingSize = mainCamera.orthographicSize;
+        float targetSize = originalCameraSize * 0.5f; // Adjust for how much you want to zoom in
 
-        while (elapsedTime < cameraZoomDuration)
+        while (elapsedTime < duration)
         {
-            mainCamera.transform.position = Vector3.Lerp(originalCameraPosition, targetPosition, elapsedTime / cameraZoomDuration);
-            mainCamera.transform.rotation = Quaternion.Lerp(originalCameraRotation, targetRotation, elapsedTime / cameraZoomDuration);
-            mainCamera.fieldOfView = Mathf.Lerp(originalCameraFieldOfView, cameraZoomFieldOfView, elapsedTime / cameraZoomDuration);
-
+            mainCamera.transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime / duration);
+            mainCamera.orthographicSize = Mathf.Lerp(startingSize, targetSize, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Ensure final position and FOV are set correctly
         mainCamera.transform.position = targetPosition;
-        mainCamera.transform.rotation = targetRotation;
-        mainCamera.fieldOfView = cameraZoomFieldOfView;
+        mainCamera.orthographicSize = targetSize;
+        isCameraZoomed = true;
+
+        // Now that the camera is zoomed in, show the dialogue UI
+        dialogueUI.SetActive(true);
+        StartCoroutine(TypeLine(dialogueLines[currentLineIndex]));
     }
 
     private IEnumerator CameraZoomOut()
     {
+        if (!isCameraZoomed) yield break;
+
+        float duration = 0.5f; // Duration of the zoom-out effect
         float elapsedTime = 0f;
 
-        while (elapsedTime < cameraZoomDuration)
-        {
-            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, originalCameraPosition, elapsedTime / cameraZoomDuration);
-            mainCamera.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, originalCameraRotation, elapsedTime / cameraZoomDuration);
-            mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, originalCameraFieldOfView, elapsedTime / cameraZoomDuration);
+        Vector3 startingPosition = mainCamera.transform.position;
+        float startingSize = mainCamera.orthographicSize;
 
+        while (elapsedTime < duration)
+        {
+            mainCamera.transform.position = Vector3.Lerp(startingPosition, originalCameraPosition, elapsedTime / duration);
+            mainCamera.orthographicSize = Mathf.Lerp(startingSize, originalCameraSize, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Ensure final position and FOV are set correctly
         mainCamera.transform.position = originalCameraPosition;
-        mainCamera.transform.rotation = originalCameraRotation;
-        mainCamera.fieldOfView = originalCameraFieldOfView;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        // Draw a sphere in the editor to visualize the interaction range
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
-
-        // Draw a line to visualize the camera focus point
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward * focusPointDistance);
+        mainCamera.orthographicSize = originalCameraSize;
+        isCameraZoomed = false;
     }
 }
