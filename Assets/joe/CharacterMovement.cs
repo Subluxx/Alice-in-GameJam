@@ -25,6 +25,7 @@ public class CharacterMovement : MonoBehaviour
     public float glideSpeed = 0.1f;
 
     // Size change parameters
+    [SerializeField] public float currentSize = 0f;
     public float sizeChangeFactor = 2f;
     public float sizeChangeDuration = 2f;
     public Vector3 maxSize = new Vector3(3f, 3f, 3f);
@@ -262,6 +263,23 @@ public class CharacterMovement : MonoBehaviour
         newSize.y = Mathf.Clamp(newSize.y, minSize.y, maxSize.y);
         newSize.z = Mathf.Clamp(newSize.z, minSize.z, maxSize.z);
 
+        currentSize = newSize.x; // for viewing
+        // change the bounce lock time depending on the scale of the player
+        switch (newSize.x)
+        {
+            case 3f:
+                bounceLockTime = 0.5f;
+                wallPushbackForce = 6f;
+                break;
+            case 2f:
+                bounceLockTime = 0.3f;
+                wallPushbackForce = 5.5f;
+                break;
+            case < 1f:
+                bounceLockTime = 0.1f;
+                wallPushbackForce = 5f;
+                break;
+        }
         targetScale = newSize;
         scaleProgress = 0f;
         isScaling = true;
