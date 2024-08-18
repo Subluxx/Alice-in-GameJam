@@ -1540,6 +1540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a71a43f7c5a4d431ea52640adf8dead9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endSize: {x: 3, y: 3, z: 1}
+  duration: 10
 --- !u!1 &523629557
 GameObject:
   m_ObjectHideFlags: 0
