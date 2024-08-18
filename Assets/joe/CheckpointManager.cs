@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
-    public static CheckpointManager Instance;
+    public static CheckpointManager Instance { get; private set; }
 
     private Checkpoint currentCheckpoint;
     private CharacterMovement player;
@@ -12,6 +12,8 @@ public class CheckpointManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("CheckpointManager instance set.");
         }
         else
         {
@@ -22,6 +24,10 @@ public class CheckpointManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<CharacterMovement>();
+        if (player == null)
+        {
+            Debug.LogError("CharacterMovement script not found in the scene.");
+        }
     }
 
     public void SetCheckpoint(Checkpoint checkpoint)
@@ -29,10 +35,12 @@ public class CheckpointManager : MonoBehaviour
         if (currentCheckpoint != null)
         {
             currentCheckpoint.SetInactive();
+            Debug.Log("Previous checkpoint deactivated.");
         }
 
         currentCheckpoint = checkpoint;
         currentCheckpoint.SetActive();
+        Debug.Log("New checkpoint set at position: " + checkpoint.transform.position);
     }
 
     public void RestartFromCheckpoint()
@@ -41,6 +49,10 @@ public class CheckpointManager : MonoBehaviour
         {
             player.transform.position = currentCheckpoint.transform.position;
             // Optionally reset player status (e.g., health, size, etc.)
+        }
+        else
+        {
+            Debug.LogWarning("No checkpoint set or player not found.");
         }
     }
 }

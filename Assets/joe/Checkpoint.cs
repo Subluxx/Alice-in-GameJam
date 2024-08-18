@@ -5,30 +5,41 @@ public class Checkpoint : MonoBehaviour
 {
     public Material inactiveMaterial;
     public Material activeMaterial;
-    public string checkpointMessage = "Checkpoint Reached!";
+    public string checkpointMessage = "Checkpoint Reached! Press 'R' to return to this checkpoint";
     public float messageDisplayTime = 2f; // Time the message is displayed
+
+    public Text checkpointText; // Reference to the UI Text component
 
     private Renderer checkpointRenderer;
     private bool isActive = false;
-    private Text checkpointText; // Reference to the UI Text component
+    private bool hasBeenVisited = false; // Flag to track if the checkpoint has been visited
 
     private void Start()
     {
         checkpointRenderer = GetComponent<Renderer>();
         SetInactive();
 
-        // Find the Text component in the scene
-        checkpointText = GameObject.Find("CheckpointText").GetComponent<Text>();
-        checkpointText.enabled = false;
+        if (checkpointText != null)
+        {
+            checkpointText.enabled = false;
+        }
+        else
+        {
+            Debug.LogError("Checkpoint Text is not assigned in the Inspector. Please assign the Text component.");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            SetActive();
-            CheckpointManager.Instance.SetCheckpoint(this);
-            DisplayCheckpointMessage();
+            if (!hasBeenVisited)
+            {
+                SetActive();
+                CheckpointManager.Instance.SetCheckpoint(this);
+                DisplayCheckpointMessage();
+                hasBeenVisited = true; // Mark this checkpoint as visited
+            }
         }
     }
 

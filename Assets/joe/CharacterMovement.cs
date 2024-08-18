@@ -1,35 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class CharacterMovement : MonoBehaviour
-{ 
-       // Movement and control variables
+{
+    // Movement parameters
     public float walkSpeed = 10f;
     public float sprintSpeed = 15f;
-    public float airControlMultiplier = 0.5f;
+    public float airControlMultiplier = 0.1f;
     public float acceleration = 15f;
     public float deceleration = 15f;
-    public float smoothTime = 0.1f;
-    public float friction = 5f;
+    public float smoothTime = 0.2f;
     public float gravity = 12f;
-    public float apexGravityMultiplier = 0.6f;
-    public float fastFallForce = 10f;
-    public float groundCorrectionForce = 5f;
+    public float apexGravityMultiplier = 0.4f;
+    public float fastFallForce = 1f;
+    public float groundCorrectionForce = 4f;
 
-    // Jump variables
-    public float jumpForce = 9f;
-    public float jumpBufferTime = 0.1f;
+    // Jump parameters
+    public float jumpForce = 5f;
+    public float jumpBufferTime = 0.2f;
     public float coyoteTime = 0.1f;
-    public float glideFactor = 0.6f;
+    public float glideFactor = 0.8f;
     public float glideSpeed = 0.1f;
 
-    // Size change variables
-    public float sizeChangeFactor = 1.1f;  // Factor to change size
-    public float sizeChangeDuration = 0.5f;  // Duration of size change effect
-    public Vector3 maxSize = new Vector3(2.2f, 2.2f, 2.2f);  // Maximum allowed size
-    public Vector3 minSize = new Vector3(0.8f, 0.8f, 0.8f);  // Minimum allowed size
+    // Size change parameters
+    public float sizeChangeFactor = 2f;
+    public float sizeChangeDuration = 2f;
+    public Vector3 maxSize = new Vector3(3f, 3f, 3f);
+    public Vector3 minSize = new Vector3(0.3f, 0.3f, 0.3f);
+
+    // Wall collision parameters
+    public float wallPushbackForce = 2f; // Force to push player away from the wall
+    public float wallDetectionRadius = 1f; // Radius for detecting walls
+    public float bounceLockTime = 0.1f; // Time to lock movement after bouncing off a wall
 
     private float currentSpeed = 0f;
     private Vector3 currentVelocity = Vector3.zero;
@@ -38,18 +42,17 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 targetScale;
     private bool isScaling = false;
     private float scaleProgress = 0f;
-    private bool isGrounded;
-    private Rigidbody rb;
-    private CapsuleCollider capsuleCollider;
-    private bool isApexReached = false;
+    private bool isGrounded = false;
     private bool isJumping = false;
-    private float jumpTimeCounter;
+    private bool isBouncing = false;
     private float jumpBufferCounter = 0f;
     private float coyoteTimeCounter = 0f;
     private bool jumpInput = false;
     private bool fastFallInput = false;
     private bool holdJumpInput = false;
-    private Collider groundCollider;
+
+    private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
 
     void Start()
     {
@@ -58,20 +61,20 @@ public class CharacterMovement : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         targetScale = transform.localScale;
         capsuleCollider = GetComponent<CapsuleCollider>();
-
-        // Ensure a Box Collider is attached for ground detection
-        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
-        boxCollider.isTrigger = true; // Set as trigger for collision detection
     }
 
     void Update()
     {
-        // Quick restart to last checkpoint when 'R' is pressed
         if (Input.GetKeyDown(KeyCode.R))
         {
-            CheckpointManager.Instance.RestartFromCheckpoint();
+            if (CheckpointManager.Instance != null)
+            {
+                CheckpointManager.Instance.RestartFromCheckpoint();
+            }
         }
-        // Handle player inputs in Update
+
+        if (isBouncing) return; // Lock movement if bouncing
+
         jumpInput = Input.GetKeyDown(KeyCode.W);
         holdJumpInput = Input.GetKey(KeyCode.W);
         fastFallInput = Input.GetKey(KeyCode.S);
@@ -79,42 +82,37 @@ public class CharacterMovement : MonoBehaviour
         float moveX = 0f;
         if (Input.GetKey(KeyCode.A))
         {
-            moveX = -1f;  // Move left
+            moveX = -1f;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            moveX = 1f;   // Move right
+            moveX = 1f;
         }
 
         targetDirection = new Vector3(moveX, 0f, 0f).normalized;
 
         if (jumpInput)
         {
-            jumpBufferCounter = jumpBufferTime;  // Reset jump buffer when jump is pressed
+            jumpBufferCounter = jumpBufferTime;
         }
     }
 
     void FixedUpdate()
     {
-        // Handle coyote time
-        if (isGrounded)
-        {
-            coyoteTimeCounter = coyoteTime;  // Reset coyote time when grounded
-        }
-        else
-        {
-            coyoteTimeCounter -= Time.fixedDeltaTime;  // Decrease coyote time while airborne
-        }
+        HandleMovement();
+        HandleJumping();
+        HandleGravity();
+        HandleScaling();
+        HandleWallCollisions(); // Handle wall collisions
+    }
 
-        // Handle jump buffering
-        jumpBufferCounter -= Time.fixedDeltaTime;  // Decrease jump buffer over time
+    private void HandleMovement()
+    {
+        if (isBouncing) return; // Skip movement handling if bouncing
 
-        // Apply air control multiplier if in the air
+        float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
         float currentAcceleration = isGrounded ? acceleration : acceleration * airControlMultiplier;
         float currentDeceleration = isGrounded ? deceleration : deceleration * airControlMultiplier;
-
-        // Determine target speed
-        float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
 
         if (targetDirection.magnitude > 0)
         {
@@ -125,7 +123,6 @@ public class CharacterMovement : MonoBehaviour
             currentSpeed = Mathf.SmoothDamp(currentSpeed, 0f, ref currentVelocity.x, smoothTime);
         }
 
-        // Smoothly apply movement using Rigidbody
         movement = targetDirection * currentSpeed;
 
         if (isGrounded)
@@ -134,27 +131,25 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
-            // Apply glide effect when changing direction in the air
             Vector3 desiredVelocity = new Vector3(movement.x, rb.velocity.y, 0f);
             rb.velocity = Vector3.Lerp(rb.velocity, desiredVelocity, glideSpeed);
         }
+    }
 
-        // Variable Jump Height with Jump Buffer and Coyote Time
+    private void HandleJumping()
+    {
         if (jumpBufferCounter > 0 && (coyoteTimeCounter > 0 || isGrounded))
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z); // Apply jump force
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
             isJumping = true;
-            isApexReached = false;
-
-            // Reset jump buffer to prevent double jumps
             jumpBufferCounter = 0f;
         }
 
         if (holdJumpInput && isJumping)
         {
-            if (rb.velocity.y > 0)  // While ascending
+            if (rb.velocity.y > 0)
             {
-                rb.velocity += Vector3.up * (jumpForce / 2) * Time.fixedDeltaTime; // Increase jump force while holding
+                rb.velocity += Vector3.up * (jumpForce / 2) * Time.fixedDeltaTime;
             }
         }
 
@@ -163,42 +158,34 @@ public class CharacterMovement : MonoBehaviour
             isJumping = false;
         }
 
-        // Fast falling
         if (fastFallInput && !isGrounded)
         {
             rb.AddForce(Vector3.down * fastFallForce, ForceMode.VelocityChange);
         }
+    }
 
-        // Apply custom gravity logic
+    private void HandleGravity()
+    {
         if (!isGrounded)
         {
-            if (rb.velocity.y > 0 && !isApexReached)
+            if (rb.velocity.y > 0)
             {
                 rb.AddForce(Vector3.down * gravity * apexGravityMultiplier, ForceMode.Acceleration);
             }
             else
             {
                 rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
-                if (rb.velocity.y <= 0)
-                {
-                    isApexReached = true;
-                }
             }
         }
 
-        // Correct position to avoid clipping
         if (isGrounded && rb.velocity.y < 0)
         {
             rb.velocity = new Vector3(rb.velocity.x, Mathf.Max(rb.velocity.y, -groundCorrectionForce), rb.velocity.z);
         }
+    }
 
-        // Handle friction on landing/takeoff
-        if (isGrounded && Mathf.Abs(rb.velocity.x) > 0.1f)
-        {
-            rb.velocity = new Vector3(rb.velocity.x * (1 - friction * Time.deltaTime), rb.velocity.y, rb.velocity.z);
-        }
-
-        // Handle smooth scaling if scaling is in progress
+    private void HandleScaling()
+    {
         if (isScaling)
         {
             scaleProgress += Time.deltaTime / sizeChangeDuration;
@@ -211,13 +198,66 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    // Method to change the character's size
+    private void HandleWallCollisions()
+    {
+        if (isBouncing) return; // Skip wall collision handling if bouncing
+
+        // Check for collisions with walls
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, wallDetectionRadius);
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.CompareTag("Wall"))
+            {
+                Vector3 pushbackDirection = (transform.position - collider.transform.position).normalized;
+                rb.AddForce(pushbackDirection * wallPushbackForce, ForceMode.VelocityChange);
+
+                // Trigger bounce logic
+                if (!isBouncing)
+                {
+                    isBouncing = true;
+                    StartCoroutine(UnlockMovementAfterTime(bounceLockTime));
+                }
+            }
+        }
+    }
+
+    private IEnumerator UnlockMovementAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        isBouncing = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+        else if (collision.collider.CompareTag("Wall"))
+        {
+            // Handle wall collision bounce
+            if (!isBouncing)
+            {
+                Vector3 pushbackDirection = (transform.position - collision.transform.position).normalized;
+                rb.AddForce(pushbackDirection * wallPushbackForce, ForceMode.VelocityChange);
+
+                isBouncing = true;
+                StartCoroutine(UnlockMovementAfterTime(bounceLockTime));
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
     public void ChangeSize(float factor)
     {
-        // Calculate the new size
         Vector3 newSize = transform.localScale * factor;
-
-        // Ensure the new size is within limits
         newSize.x = Mathf.Clamp(newSize.x, minSize.x, maxSize.x);
         newSize.y = Mathf.Clamp(newSize.y, minSize.y, maxSize.y);
         newSize.z = Mathf.Clamp(newSize.z, minSize.z, maxSize.z);
@@ -225,23 +265,5 @@ public class CharacterMovement : MonoBehaviour
         targetScale = newSize;
         scaleProgress = 0f;
         isScaling = true;
-    }
-
-    void OnCollisionStay(Collision collision)
-    {
-        // Check if the collision is with ground
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        // Check if the collision is with ground
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
     }
 }

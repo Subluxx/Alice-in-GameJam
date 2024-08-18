@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6135715-d30f-4ccf-bc5e-c80356d8e981" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Alice-in-GameJam/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Alice-in-GameJam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Alice-in-GameJam/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/joe/CharacterMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/joe/CharacterMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/joe/Checkpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/joe/Checkpoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/joe/CheckpointManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/joe/CheckpointManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/joe/ItemBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/joe/ItemBehavior.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +18,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/joe/Checkpoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/joe/CheckpointManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -92,7 +99,8 @@
       <option name="presentableId" value="Default" />
       <updated>1723900581963</updated>
       <workItem from="1723900592260" duration="964000" />
-      <workItem from="1723915295726" duration="5047000" />
+      <workItem from="1723915295726" duration="14245000" />
+      <workItem from="1723977464700" duration="6164000" />
     </task>
     <servers />
   </component>
