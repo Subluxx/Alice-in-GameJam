@@ -740,6 +740,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &538065266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 538065267}
+  m_Layer: 0
+  m_Name: PuzzleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &538065267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538065266}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 380.40903, y: 256.53946, z: -2.663615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &605395696
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,7 +897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 1841985161}
   removeButton: {fileID: 1640494319}
-  objectPrefab: {fileID: 0}
+  itemPickup: {fileID: 0}
 --- !u!1 &926381773
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,7 +1024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 605395698}
   removeButton: {fileID: 450215613}
-  objectPrefab: {fileID: 0}
+  itemPickup: {fileID: 302583098}
 --- !u!1 &1271814554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,7 +1267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 926381775}
   removeButton: {fileID: 1510205490}
-  objectPrefab: {fileID: 0}
+  itemPickup: {fileID: 0}
 --- !u!1 &1510205488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,7 +1953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 1735404974}
   removeButton: {fileID: 260214846}
-  objectPrefab: {fileID: 0}
+  itemPickup: {fileID: 0}
 --- !u!1001 &7035665461051939939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2107,6 +2138,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 9210028705203215135, guid: 8a29dfecb0d4ed64994aaaec0676f304, type: 3}
+      propertyPath: itemPickup
+      value: 
+      objectReference: {fileID: 1732772280}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2136,3 +2171,4 @@ SceneRoots:
   - {fileID: 1871322132}
   - {fileID: 492822769}
   - {fileID: 320462591}
+  - {fileID: 538065267}
