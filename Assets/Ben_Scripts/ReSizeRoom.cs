@@ -22,7 +22,7 @@ public class ReSizeRoom : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     }
     public void OnPointerExit(PointerEventData eventData){
-
+        bigRoom.returnSize();
     }
 
 }
