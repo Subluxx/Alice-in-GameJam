@@ -7,14 +7,14 @@ using UnityEngine.EventSystems;
 
 public class EventClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    ReSizeRoom reSizeRoom;
+    ReSizeObject reSizeObject;
     PopUp popUp;
     Outline outline;
     bool touching = false;
     //ReSizeRoom reSizeRoom;
     private Vector2 scale;
     private void Awake(){
-        reSizeRoom = GetComponent<ReSizeRoom>();
+        reSizeObject = GetComponent<ReSizeObject>();
         popUp = GetComponent<PopUp>();
         outline = gameObject.AddComponent<Outline>();
         outline.OutlineMode = Outline.Mode.OutlineHidden;
@@ -44,7 +44,9 @@ public class EventClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     private void Update(){
         if(touching){
             if(Input.GetKey(KeyCode.F)){
-                reSizeRoom.ReSizeObject();
+                reSizeObject.reSizeObject();
+            }else if(Input.GetKey(KeyCode.G)){
+                reSizeObject.shrinkObject();
             }
         }
     }

@@ -1,14 +1,28 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ReSizeRoom : MonoBehaviour
+public class ReSizeRoom : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    private float cool = 1;
-    public void ReSizeObject(){
-            cool += Time.deltaTime;
-            transform.localScale = new Vector3(cool, cool, 1);
-        
+    BigRoom bigRoom;
+    private void Awake(){
+        bigRoom = GetComponent<BigRoom>();
     }
+    public void OnPointerClick(PointerEventData eventData){
+        bigRoom.enlarge();
+    }
+    public void OnPointerDown(PointerEventData eventData){
+    }
+    public void OnPointerUp(PointerEventData eventData){
+    }
+    public void OnPointerEnter(PointerEventData eventData){
+
+    }
+    public void OnPointerExit(PointerEventData eventData){
+
+    }
+
 }

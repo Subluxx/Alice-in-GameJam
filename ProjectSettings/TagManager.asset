@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - EnlargePopUp
+  - Room
   layers:
   - Default
   - TransparentFX
