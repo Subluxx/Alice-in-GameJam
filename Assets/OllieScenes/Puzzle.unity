@@ -215,8 +215,8 @@ GameObject:
   - component: {fileID: 31205151}
   - component: {fileID: 31205152}
   m_Layer: 0
-  m_Name: Test
-  m_TagString: Untagged
+  m_Name: Necklace
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,7 +277,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -388,7 +388,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionTransform: {fileID: 31205150}
   radius: 5
-  item: {fileID: 11400000, guid: 864633b396de6dc4791743cf6701e2ba, type: 2}
+  item: {fileID: 11400000, guid: e8a6e60fe2b76654394342c6aba77540, type: 2}
+  puzzleScript: {fileID: 2146543177}
 --- !u!1 &65959868
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &65959869
 Transform:
   m_ObjectHideFlags: 0
@@ -437,7 +438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &122344536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,7 +1400,7 @@ Transform:
   m_GameObject: {fileID: 448638060}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.053826, y: 10.193865, z: 463.96}
+  m_LocalPosition: {x: 12.053826, y: 10.193865, z: 835}
   m_LocalScale: {x: 60, y: 60, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4029,7 +4030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1784550692
 Transform:
   m_ObjectHideFlags: 0
@@ -4065,7 +4066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1810191344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4552,8 +4553,8 @@ GameObject:
   - component: {fileID: 2082553872}
   - component: {fileID: 2082553871}
   m_Layer: 0
-  m_Name: Test (1)
-  m_TagString: Untagged
+  m_Name: Grandma
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4572,7 +4573,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionTransform: {fileID: 2082553879}
   radius: 5
-  item: {fileID: 11400000, guid: 864633b396de6dc4791743cf6701e2ba, type: 2}
+  item: {fileID: 11400000, guid: 5b93b4e6fa174294889868565bbd70d1, type: 2}
+  puzzleScript: {fileID: 2146543177}
 --- !u!54 &2082553872
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4656,7 +4658,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -4871,7 +4873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2146543176}
-  - component: {fileID: 2146543175}
+  - component: {fileID: 2146543177}
   m_Layer: 0
   m_Name: PuzzleManager
   m_TagString: Untagged
@@ -4879,19 +4881,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2146543175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146543174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db6c706b47987d94da3f303ef2417ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentPuzzle: 0
 --- !u!4 &2146543176
 Transform:
   m_ObjectHideFlags: 0
@@ -4907,6 +4896,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2146543177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146543174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3657e47c4a7e4e47a90591a17c358b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4408123124348524303
 PrefabInstance:
   m_ObjectHideFlags: 0

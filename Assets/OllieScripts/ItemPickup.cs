@@ -1,10 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ItemPickup : Interactable
 {
     public Item item;
+    public PuzzleScript puzzleScript;
+
+    string objName;
+    string obj2Name;
+    
+
+    void Start()
+    {
+
+        string objName = "";
+        string obj2Name = "";
+    }
 
     public override void Interact()
     {
@@ -29,5 +43,34 @@ public class ItemPickup : Interactable
             /*Destroy(gameObject);*/
         }
 
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Interactable")
+        {
+            ItemPickup collidedObject = collision.gameObject.GetComponent<ItemPickup>();
+
+            obj2Name = collidedObject.item.name;
+            objName = item.name;
+
+            CheckInteraction(objName, obj2Name);
+
+            obj2Name = "";
+        }
+    }
+
+    
+
+    public void CheckInteraction(string obj, string obj2)
+    {
+        
+        switch (obj, obj2)
+        {
+            case ("Necklace", "Grandma"):
+                Debug.Log(obj + " + " + obj2);
+                puzzleScript.NecklaceNPC();
+                break;
+        }
     }
 }

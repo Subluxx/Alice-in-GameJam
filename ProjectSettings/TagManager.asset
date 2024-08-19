@@ -9,6 +9,7 @@ TagManager:
   - GrowItem
   - Wall
   - Room
+  - Interactable
   layers:
   - Default
   - TransparentFX

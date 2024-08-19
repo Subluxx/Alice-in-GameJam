@@ -35,7 +35,7 @@ public class EventClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
     public void OnEndDrag(PointerEventData eventData){
         Cursor.visible = true;
-        if(pickedUp.transform.position.y <originalPos.y-5){
+        if(pickedUp.transform.position.y <0){
             pickedUp.transform.position = originalPos;
         }
     }
