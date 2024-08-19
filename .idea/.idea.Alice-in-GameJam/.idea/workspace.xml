@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6135715-d30f-4ccf-bc5e-c80356d8e981" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Alice-in-GameJam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Alice-in-GameJam/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/joe/CameraTransition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/joe/CameraTransition.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/joe/CharacterMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/joe/CharacterMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/joe/NPCDialogue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/joe/NPCDialogue.cs" afterDir="false" />
-    </list>
+    <list default="true" id="b6135715-d30f-4ccf-bc5e-c80356d8e981" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,7 +96,7 @@
       <updated>1723900581963</updated>
       <workItem from="1723900592260" duration="964000" />
       <workItem from="1723915295726" duration="14245000" />
-      <workItem from="1723977464700" duration="19778000" />
+      <workItem from="1723977464700" duration="20355000" />
     </task>
     <servers />
   </component>
