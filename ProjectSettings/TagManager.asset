@@ -9,8 +9,6 @@ TagManager:
   - GrowItem
   - Wall
   - Room
-  - EnlargePopUp
-  - Drag
   layers:
   - Default
   - TransparentFX

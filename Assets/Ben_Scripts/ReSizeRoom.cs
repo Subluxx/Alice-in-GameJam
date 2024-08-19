@@ -11,9 +11,13 @@ public class ReSizeRoom : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         bigRoom = GetComponent<BigRoom>();
     }
     public void OnPointerClick(PointerEventData eventData){
-        bigRoom.enlarge();
     }
     public void OnPointerDown(PointerEventData eventData){
+        if(eventData.pointerId == -1){
+            bigRoom.enlarge();
+        }else if(eventData.pointerId == -2){
+            bigRoom.returnSize();
+        }
     }
     public void OnPointerUp(PointerEventData eventData){
     }
@@ -21,7 +25,7 @@ public class ReSizeRoom : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     }
     public void OnPointerExit(PointerEventData eventData){
-        bigRoom.returnSize();
+        //bigRoom.returnSize();
     }
 
 }
