@@ -7,6 +7,8 @@ using UnityEngine;
 public class ReSizeObject : MonoBehaviour
 {
     private Vector3 startSize;
+    public float maxSize = 3f;
+
     [SerializeField] private Vector3 endSize;
     [SerializeField] private float duration;
     private float elapsedTime;
@@ -23,16 +25,17 @@ public class ReSizeObject : MonoBehaviour
         //     transform.localScale = Vector3.Lerp(startSize, endSize, percentageComplete);
 
         // }
-        if(transform.localScale.x<3f){
+        if(transform.localScale.x< maxSize)
+        {
             elapsedTime += Time.deltaTime;
-            transform.localScale = new Vector3(elapsedTime, elapsedTime, 1);
+            transform.localScale = new Vector3(elapsedTime, elapsedTime, elapsedTime);
         }
         
     }
     public void shrinkObject(){
         if(transform.localScale.x>1f){
             elapsedTime -= Time.deltaTime;
-            transform.localScale = new Vector3(elapsedTime, elapsedTime, 1);
+            transform.localScale = new Vector3(elapsedTime, elapsedTime, elapsedTime);
         }
     }
 

@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
+    public int currentPuzzle = 0;
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        
         
     }
 
@@ -14,5 +18,10 @@ public class PuzzleManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void GiveHint()
+    {
+
     }
 }

@@ -45,6 +45,7 @@ public class InventorySlot : MonoBehaviour {
 
     public void SpawnItem()
     {
+        itemPickup.transform.position += new Vector3(-11.63f, 6.84f, -8.99f);
         itemPickup.SetActive(true);
         //spawn a 3d item back to the scene
     }
