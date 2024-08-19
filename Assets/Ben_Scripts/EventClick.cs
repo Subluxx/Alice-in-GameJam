@@ -9,6 +9,8 @@ public class EventClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     ReSizeObject reSizeObject;
     PopUp popUp;
     Outline outline;
+    GameObject pickedUp;
+    Vector3 originalPos;
     bool touching = false;
     private Vector2 scale;
     Camera m_cam;
@@ -22,17 +24,20 @@ public class EventClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         outline.OutlineWidth = 5f;
     }
     public void OnDrag(PointerEventData eventData){
-        Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z);
+        Vector3 position = new Vector3(eventData.position.x, eventData.position.y, Camera.main.WorldToScreenPoint(transform.position).z);
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
         transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);  
-
-
     }
     public void OnBeginDrag(PointerEventData eventData){
         Cursor.visible = false;
+        originalPos = transform.position;
+        
     }
     public void OnEndDrag(PointerEventData eventData){
         Cursor.visible = true;
+        if(pickedUp.transform.position.y <originalPos.y-5){
+            pickedUp.transform.position = originalPos;
+        }
     }
     public void OnPointerClick(PointerEventData eventData){
         //Debug.Log("FRENCH TOAST");
@@ -40,6 +45,7 @@ public class EventClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public void OnPointerDown(PointerEventData eventData){
     }
     public void OnPointerUp(PointerEventData eventData){
+        pickedUp = eventData.pointerPress;
     }
     public void OnPointerEnter(PointerEventData eventData){
         if(Cursor.visible == true){
