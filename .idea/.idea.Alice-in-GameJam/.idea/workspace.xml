@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b6135715-d30f-4ccf-bc5e-c80356d8e981" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Alice-in-GameJam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Alice-in-GameJam/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/JoeScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/JoeScene.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +36,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "joe-4",
+    "git-widget-placeholder": "joe-5",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -102,7 +101,7 @@
       <workItem from="1723900592260" duration="964000" />
       <workItem from="1723915295726" duration="14245000" />
       <workItem from="1723977464700" duration="20355000" />
-      <workItem from="1724060722715" duration="2894000" />
+      <workItem from="1724060722715" duration="3606000" />
     </task>
     <servers />
   </component>
