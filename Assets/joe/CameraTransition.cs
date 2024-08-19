@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CameraTransition : MonoBehaviour
 {
-    public Transform leftCameraPosition;  // Set in the inspector: Camera position for the left room
-    public Transform rightCameraPosition; // Set in the inspector: Camera position for the right room
+    public Transform leftCameraPosition;  //Camera position for the left room
+    public Transform rightCameraPosition; //Camera position for the right room
 
     private Camera mainCamera;
     private bool transitioning = false;

@@ -275,7 +275,7 @@ public class CharacterMovement : MonoBehaviour
                 bounceLockTime = 0.3f;
                 wallPushbackForce = 5.5f;
                 break;
-            case < 1f:
+            case <= 1f:
                 bounceLockTime = 0.1f;
                 wallPushbackForce = 5f;
                 break;
