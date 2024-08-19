@@ -14,13 +14,13 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
     public Image textboxImage; // Reference to the Image component for the textbox
     public Text dialogueText; // Reference to the Text component for the dialogue
     public Transform npcTransform; // Reference to the NPC's transform
-
+    public Transform originalCameraPosition;
+    
     private int currentLineIndex = 0;
     private bool isTyping = false;
     private bool isDialogueActive = false;
 
     private Camera mainCamera;
-    private Vector3 originalCameraPosition;
     private float originalCameraSize;
     private bool isCameraZoomed = false;
 
@@ -31,7 +31,6 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
     private void Start()
     {
         mainCamera = Camera.main;
-        originalCameraPosition = mainCamera.transform.position;
         originalCameraSize = mainCamera.orthographicSize;
 
         dialogueUI.SetActive(false); // Hide the UI at the start
@@ -55,7 +54,7 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
         {
             // Position the UI above the NPC
             Vector3 screenPosition = mainCamera.WorldToScreenPoint(npcTransform.position);
-            dialogueUI.transform.position = screenPosition + new Vector3(0, 100, 0); // Adjust this offset as needed
+            dialogueUI.transform.position = screenPosition + new Vector3(0, 100, 0); 
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -134,14 +133,14 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
     private IEnumerator CameraZoomIn()
     {
         Vector3 targetPosition = npcTransform.position;
-        targetPosition.z -= 10; // Adjust this value to position the camera in front of the NPC
+        targetPosition.z -= 10; 
 
         float duration = 0.5f; // Duration of the zoom-in effect
         float elapsedTime = 0f;
 
         Vector3 startingPosition = mainCamera.transform.position;
         float startingSize = mainCamera.orthographicSize;
-        float targetSize = originalCameraSize * 0.5f; // Adjust for how much you want to zoom in
+        float targetSize = originalCameraSize * 0.5f; 
 
         while (elapsedTime < duration)
         {
@@ -172,13 +171,13 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
 
         while (elapsedTime < duration)
         {
-            mainCamera.transform.position = Vector3.Lerp(startingPosition, originalCameraPosition, elapsedTime / duration);
+            mainCamera.transform.position = Vector3.Lerp(startingPosition, originalCameraPosition.position, elapsedTime / duration);
             mainCamera.orthographicSize = Mathf.Lerp(startingSize, originalCameraSize, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        mainCamera.transform.position = originalCameraPosition;
+        mainCamera.transform.position = originalCameraPosition.position;
         mainCamera.orthographicSize = originalCameraSize;
         isCameraZoomed = false;
     }
