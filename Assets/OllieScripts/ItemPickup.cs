@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -47,7 +48,9 @@ public class ItemPickup : Interactable
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Interactable")
+        obj2Name = "";
+        objName = "";
+        if (collision.gameObject.tag == "Interactable")
         {
             ItemPickup collidedObject = collision.gameObject.GetComponent<ItemPickup>();
 
@@ -56,7 +59,7 @@ public class ItemPickup : Interactable
 
             CheckInteraction(objName, obj2Name);
 
-            obj2Name = "";
+            
         }
     }
 
@@ -70,6 +73,17 @@ public class ItemPickup : Interactable
             case ("Necklace", "Grandma"):
                 Debug.Log(obj + " + " + obj2);
                 puzzleScript.NecklaceNPC();
+                break;
+            
+
+            case ("Glass", "Fireplace"):
+                Debug.Log(obj + " + " + obj2);
+                puzzleScript.NecklaceNPC();
+                break;
+            
+
+            default:
+                Debug.Log("No known interactions");
                 break;
         }
     }
