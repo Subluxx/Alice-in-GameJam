@@ -133,7 +133,8 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
     private IEnumerator CameraZoomIn()
     {
         Vector3 targetPosition = npcTransform.position;
-        targetPosition.z -= 10; 
+        targetPosition.z -= 10;
+        targetPosition.y += 3;
 
         float duration = 0.5f; // Duration of the zoom-in effect
         float elapsedTime = 0f;
