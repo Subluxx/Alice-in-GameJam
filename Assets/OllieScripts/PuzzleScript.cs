@@ -5,6 +5,8 @@ using UnityEngine;
 public class PuzzleScript : MonoBehaviour
 {
     public GameObject GlassObject;
+    public GameObject WaterGlassObject;
+    public GameObject SinkObject;
     public GameObject NecklaceObject;
     public GameObject LampObject;
     public GameObject ChairObject;
@@ -15,6 +17,8 @@ public class PuzzleScript : MonoBehaviour
     public GameObject VaseObject;
     public GameObject ShardObject;
     public GameObject MarblesObject;
+    public GameObject KeyObject;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +32,14 @@ public class PuzzleScript : MonoBehaviour
         
     }
 
-    public void GlassFire()
+    public void GlassSink()
+    {
+        Debug.Log("Fill with water");
+        GlassObject.SetActive(false);
+        WaterGlassObject.SetActive(true);
+    }
+
+    public void WaterGlassFire()
     {
         Debug.Log("Extinguish fire");
     }

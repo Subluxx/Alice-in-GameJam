@@ -74,12 +74,19 @@ public class ItemPickup : Interactable
                 Debug.Log(obj + " + " + obj2);
                 puzzleScript.NecklaceNPC();
                 break;
-            
 
-            case ("Glass", "Fireplace"):
+
+            case ("Glass", "Sink"):
                 Debug.Log(obj + " + " + obj2);
-                puzzleScript.NecklaceNPC();
+                puzzleScript.GlassSink();
                 break;
+
+
+            case ("WaterGlass", "Fireplace"):
+                Debug.Log(obj + " + " + obj2);
+                puzzleScript.WaterGlassFire();
+                break;
+
             
 
             default:
