@@ -8,13 +8,13 @@ public class ReSizeObject : MonoBehaviour
 {
     private Vector3 startSize;
     public float maxSize = 3f;
-
-    [SerializeField] private Vector3 endSize;
-    [SerializeField] private float duration;
-    private float elapsedTime;
+    public float minSize;
+    //private float elapsedTime;
+    private float scaleFactor;
     void Awake(){
         startSize = transform.localScale;
-        elapsedTime = transform.localScale.x;
+        //elapsedTime = transform.localScale.x;
+         scaleFactor = 1.2f;
     }
     public void reSizeObject(){
         // while(elapsedTime <= duration){
@@ -27,15 +27,19 @@ public class ReSizeObject : MonoBehaviour
         // }
         if(transform.localScale.x< maxSize)
         {
-            elapsedTime += Time.deltaTime;
-            transform.localScale = new Vector3(elapsedTime, elapsedTime, elapsedTime);
+            //elapsedTime += Time.deltaTime;
+            //transform.localScale = new Vector3(elapsedTime, elapsedTime, elapsedTime);
+            transform.localScale = new Vector3(transform.localScale.x*scaleFactor, transform.localScale.y*scaleFactor, transform.localScale.z*scaleFactor);
         }
         
     }
     public void shrinkObject(){
-        if(transform.localScale.x>1f){
-            elapsedTime -= Time.deltaTime;
-            transform.localScale = new Vector3(elapsedTime, elapsedTime, elapsedTime);
+        // if(transform.localScale.x>1f){
+        //     elapsedTime -= Time.deltaTime;
+        //     transform.localScale = new Vector3(elapsedTime, elapsedTime, elapsedTime);
+        // }
+        if(transform.localScale.x>minSize){
+            transform.localScale = new Vector3(transform.localScale.x/scaleFactor, transform.localScale.y/scaleFactor, transform.localScale.z/scaleFactor);
         }
     }
 
