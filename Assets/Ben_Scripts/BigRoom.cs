@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class BigRoom : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Start is called before the first frame update\
+    public GameObject house;
     public GameObject[] otherRooms;
     private GameObject[] placeHolder;
     private GameObject wall;
@@ -44,11 +45,12 @@ public class BigRoom : MonoBehaviour
     public void enlarge(){
         if(changeSize == true){
             //Debug.Log(transform.localScale);
+            house.transform.localScale = new Vector3(transform.localScale.x,transform.localScale.y/2,transform.localScale.z/2);
             wall.SetActive(false);
             if(currentRoom.name == "bathroom" || currentRoom.name == "recreation"){
                 transform.localScale = new Vector3(100, transform.localScale.y*scaleFactor,100);
             }else{
-                transform.localScale = new Vector3(100, transform.localScale.y*scaleFactor,transform.localScale.z*scaleFactor);
+                transform.localScale = new Vector3(100, transform.localScale.y*2*scaleFactor,transform.localScale.z*2*scaleFactor);
             }
             // if(transform.position == GameObject.Find("kitchen").transform.position){
             //     transform.position = new Vector3(transform.position.x+5, transform.position.y-2, transform.position.z);
