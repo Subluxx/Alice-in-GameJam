@@ -19534,7 +19534,7 @@ Transform:
   m_GameObject: {fileID: 6238551843870809548}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -18.19, y: -1.6800009, z: 0.10301781}
+  m_LocalPosition: {x: -16.962, y: 1.93, z: 7.11}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19659,6 +19659,10 @@ PrefabInstance:
       value: EatMe
       objectReference: {fileID: 0}
     - target: {fileID: 3790587176165502348, guid: 26611ada070e15541bf7b4623e3241d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790587176165502348, guid: 26611ada070e15541bf7b4623e3241d9, type: 3}
       propertyPath: m_TagString
       value: ShrinkItem
       objectReference: {fileID: 0}
@@ -19730,9 +19734,12 @@ GameObject:
   - component: {fileID: 8331623278437737926}
   - component: {fileID: 2855714051175044751}
   - component: {fileID: 1475397964850343189}
+  - component: {fileID: 8331623278437737929}
+  - component: {fileID: 8331623278437737928}
+  - component: {fileID: 8331623278437737927}
   m_Layer: 0
   m_Name: potion.004
-  m_TagString: Untagged
+  m_TagString: GrowItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19756,6 +19763,10 @@ PrefabInstance:
     - target: {fileID: 7124866538184052637, guid: e48ab8e702ce18342aa87c0695806a1c, type: 3}
       propertyPath: m_Name
       value: DrinkMe
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124866538184052637, guid: e48ab8e702ce18342aa87c0695806a1c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7124866538184052637, guid: e48ab8e702ce18342aa87c0695806a1c, type: 3}
       propertyPath: m_TagString
@@ -19825,13 +19836,76 @@ GameObject:
   - component: {fileID: 112184816056728427}
   - component: {fileID: 5663519781517576571}
   - component: {fileID: 717992548431587260}
+  - component: {fileID: 6238551843870809550}
+  - component: {fileID: 6238551843870809549}
+  - component: {fileID: 6238551843870809551}
   m_Layer: 0
   m_Name: potion.002
-  m_TagString: Untagged
+  m_TagString: ShrinkItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &6238551843870809549
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6238551843870809548}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bdb3503e148617d4b84dbe21653522e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6238551843870809550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6238551843870809548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6ee9544f724f27408030c260a1e5ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightMaterial: {fileID: 0}
+  sparkleEffectPrefab: {fileID: 5948808938444003484, guid: 744f42002ceaded46b1363b4b59b6b40, type: 3}
+  clickSound: {fileID: 0}
+  tooltip: {fileID: 0}
+  respawnTime: 5
+  interactionRange: 5
+--- !u!65 &6238551843870809551
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6238551843870809548}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.009736452, y: 0.009736441, z: 0.01658908}
+  m_Center: {x: -0.00000052922405, y: -0.00000023213211, z: -0.00033602485}
 --- !u!4 &8331623278437737926
 Transform:
   m_ObjectHideFlags: 0
@@ -19841,12 +19915,72 @@ Transform:
   m_GameObject: {fileID: 4567323354450845755}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -19.240002, y: -1.7772249, z: 0.10348368}
+  m_LocalPosition: {x: 0.02, y: 1.495, z: 6.61}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1797652936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8331623278437737927
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567323354450845755}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.004687767, y: 0.0046877693, z: 0.012829609}
+  m_Center: {x: 0.000025835021, y: 0.0000044328667, z: -0.00048860785}
+--- !u!95 &8331623278437737928
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567323354450845755}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2b17ece484ba04348972d0ca71f24230, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8331623278437737929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567323354450845755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6ee9544f724f27408030c260a1e5ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightMaterial: {fileID: 0}
+  sparkleEffectPrefab: {fileID: 5948808938444003484, guid: 744f42002ceaded46b1363b4b59b6b40, type: 3}
+  clickSound: {fileID: 0}
+  tooltip: {fileID: 0}
+  respawnTime: 1
+  interactionRange: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

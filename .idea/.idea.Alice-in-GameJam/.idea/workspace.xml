@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6135715-d30f-4ccf-bc5e-c80356d8e981" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/OllieScenes/Puzzle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/OllieScenes/Puzzle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/JoeScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/JoeScene.unity" afterDir="false" />
-    </list>
+    <list default="true" id="b6135715-d30f-4ccf-bc5e-c80356d8e981" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +101,7 @@
       <workItem from="1723915295726" duration="14245000" />
       <workItem from="1723977464700" duration="20355000" />
       <workItem from="1724060722715" duration="5834000" />
-      <workItem from="1724148062674" duration="1600000" />
+      <workItem from="1724148062674" duration="2203000" />
     </task>
     <servers />
   </component>
