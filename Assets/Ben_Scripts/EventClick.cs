@@ -46,7 +46,6 @@ public class EventClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
     public void OnPointerUp(PointerEventData eventData){
         pickedUp = eventData.pointerPress;
-        Cursor.visible = true;
     }
     public void OnPointerEnter(PointerEventData eventData){
         if(Cursor.visible == true){
