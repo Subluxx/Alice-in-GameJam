@@ -22,6 +22,7 @@ public class Switch : MonoBehaviour
         {
             index = pages;
             //switch to next scene
+            Debug.Log("End game");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 

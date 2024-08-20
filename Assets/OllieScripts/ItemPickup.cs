@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using static UnityEditor.Progress;
+using UnityEngine.SceneManagement;
 
 public class ItemPickup : Interactable
 {
@@ -32,7 +33,10 @@ public class ItemPickup : Interactable
 
     void PickUp()
     {
-
+        if (item.name == "TeaTable")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
 
         Debug.Log("Pick up" + item.name);
         bool wasPickedUp = Inventory.instance.Add(item);
