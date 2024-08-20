@@ -8,7 +8,7 @@ public class Switch : MonoBehaviour
 {
     public GameObject[] background;
     int index;
-    public int pages = 3;
+    public int pages = 7;
     // Start is called before the first frame update
     void Start()
     {
