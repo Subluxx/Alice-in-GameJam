@@ -35,7 +35,7 @@ public class SceneZoomController : MonoBehaviour
         }
 
         // Start the sequence: show the whole scene first, then zoom in to the initial room
-        /*StartCoroutine(InitialViewAndZoomIn());*/
+        StartCoroutine(InitialViewAndZoomIn());
     }
 
     void Update()
@@ -49,7 +49,7 @@ public class SceneZoomController : MonoBehaviour
             }
             else
             {
-                /*StartCoroutine(ZoomInToCurrentRoom());*/
+                StartCoroutine(ZoomInToCurrentRoom());
             }
         }
     }
