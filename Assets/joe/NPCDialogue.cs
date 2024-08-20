@@ -83,7 +83,7 @@ public class NPCDialogue : MonoBehaviour, IPointerClickHandler
         }
 
         // Start the camera zoom-in effect
-        StartCoroutine(CameraZoomIn());
+        /*StartCoroutine(CameraZoomIn());*/
     }
 
     private IEnumerator TypeLine(string line)
