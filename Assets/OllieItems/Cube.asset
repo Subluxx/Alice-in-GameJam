@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Cube
   m_EditorClassIdentifier: 
   name: CubeName
-  icon: {fileID: 21300000, guid: 21dc8f02206cec249bf2d3266de653ad, type: 3}
+  icon: {fileID: 21300000, guid: 65a2c658b4038874ca10f2849293cc16, type: 3}
   showInInventory: 1
+  scale: 1

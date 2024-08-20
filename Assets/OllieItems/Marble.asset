@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Marble
   m_EditorClassIdentifier: 
   name: Marble
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 65a2c658b4038874ca10f2849293cc16, type: 3}
   showInInventory: 1
   scale: 1
