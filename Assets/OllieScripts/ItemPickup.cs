@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
-using UnityEngine.SceneManagement;
+/*using static UnityEditor.Progress;
+*/using UnityEngine.SceneManagement;
 
 public class ItemPickup : Interactable
 {
